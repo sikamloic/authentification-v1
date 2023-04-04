@@ -1,7 +1,12 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const { roles } = require('../config/role');
 
 const UserSchema = new mongoose.Schema({
+  firstName: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -15,7 +20,12 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  }
+  },
+  role: {
+    type: String,
+    enum: roles,
+    default: 'user',
+  },
 })
 
 UserSchema.methods.isPasswordMatch = async function (password) {

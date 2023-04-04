@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const dbConfig = require('./config/db.config')
 const routes = require('./routes')
+const passport = require('passport')
+const { jwtStrategy } = require('./config/passport');
 
 const app = express()
 
@@ -17,6 +19,9 @@ app.use(bodyParser.json());
 app.use(helmet());
 
 app.use(cors())
+
+app.use(passport.initialize());
+passport.use('jwt', jwtStrategy);
 
 app.use('/', routes);
 
